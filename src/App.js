@@ -4,9 +4,11 @@ import {Button,InputGroup,FormControl,Container,Card} from "react-bootstrap";
 import './App.css';
 
 
+
+
 const api={
-    key: "cc2c01498ce5f72b24bba3d6a386947b",
-    base: "https://api.openweathermap.org/data/2.5/"
+    key: "2GSEJUUQDXTRYA765LG2JCJPN",
+    base: "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
 }
 
 function App() {
@@ -15,7 +17,7 @@ function App() {
 
     const search = evt => {
         if(evt.key==="Enter"||evt.key==="Submit"){
-            fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+            fetch(`${api.base}${query}?unitGroup=metric&key=${api.key}&contentType=json`)
                 .then(res => res.json())
                 .then(result => {
                     setWeather(result);
@@ -44,17 +46,16 @@ function App() {
 
 
             </div>
-            {(weather.main !== undefined)?(
+            {(weather.currentConditions !== undefined)?(
                 <>
                 <Card style={{ width: '20rem'}} bg="info" className="text-center d-inline-block" text="white">
-                    <Card.Img variant="top" src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} />
                     <Card.Body>
-                        <Card.Title>{weather.name},{weather.sys.country}</Card.Title>
+                        <Card.Title>{weather.resolvedAddress},{weather.resolvedAddress}</Card.Title>
                         <Card.Text>
-                            {Date()}
+                            {weather.currentConditions.datetime}
                         </Card.Text>
                         <Card.Text>
-                            {weather.main.temp} °C
+                            {weather.currentConditions.temp} °C
                         </Card.Text>
                         <Button variant="primary">Add City !!!</Button>
                     </Card.Body>
